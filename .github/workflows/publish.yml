@@ -44,21 +44,13 @@ jobs:
               PRE_ID_COMMAND_STR="--preid $PRE_ID"
             fi
           fi
-          cd tools/eslint-rules
-          npm version ${{ github.event.inputs.segment }} $PRE_ID_COMMAND_STR -m "Publish v%s"
-          cd ../..
+          npm --prefix ./tools/eslint-rules version ${{ github.event.inputs.segment }} $PRE_ID_COMMAND_STR -m "Publish v%s"
           git add .
           git commit -m "Publish v%s"
       
       - name: "Publish Build"
         run: npm run build
       
-      - name: Publish to NPM Registry
-        uses: JS-DevTools/npm-publish@v1
-        with:
-          package: ./dist/eslint-rules/package.json
-          token: ${{ secrets.NPM_TOKEN }}
-
       - name: Push Tag
         uses: ad-m/github-push-action@master
         with:
