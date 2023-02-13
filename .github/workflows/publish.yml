@@ -46,7 +46,7 @@ jobs:
           fi
           npm --prefix ./tools/eslint-rules version ${{ github.event.inputs.segment }} $PRE_ID_COMMAND_STR -m "Publish v%s"
           git add .
-          git commit -m "Publish v%s"
+          git commit -m "Publish v{{cat ./tools/eslint-rules/package.json | jq '.version'}}"
       
       - name: "Publish Build"
         run: npm run build
